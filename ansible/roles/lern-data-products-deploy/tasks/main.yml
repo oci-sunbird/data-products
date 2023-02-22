@@ -1,6 +1,6 @@
 ## Data products deployment ##
 - name: Debugger
-  debug: |
+  debug:
     msg: "Value is {{dp_storage_key_config}}"
   tags:
     - always
