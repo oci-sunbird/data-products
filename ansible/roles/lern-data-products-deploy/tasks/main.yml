@@ -1,7 +1,7 @@
 ## Data products deployment ##
 - name: Debugger
   debug:
-    msg: "Value is {{checkpoint_store_type}}"
+    msg: "Value is {{dp_object_store_type}}"
   tags:
     - always
 
