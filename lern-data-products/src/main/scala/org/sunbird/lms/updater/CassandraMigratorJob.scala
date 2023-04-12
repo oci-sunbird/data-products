@@ -72,7 +72,7 @@ object CassandraMigratorJob extends IJob {
           ConnectionPortParam.option(modelParams.getOrElse("cassandraMigratePort", "9042")))
 
         spark.read.format(cassandraFormat).options(Map("table" -> cDataTableName,
-          "keyspace" -> keyspaceName, "cluster" -> "DataCluster")).load()
+          "keyspace" -> keyspaceName, "cluster" -> "DataCluster")).load().filter(col("userid") === "af39bc8f-57e8-43f6-8df7-b35e2dc08e15")
       }
       val repartitionColumns = if (modelParams.getOrElse("repartitionColumns", "").toString.nonEmpty)
         modelParams.getOrElse("repartitionColumns", "").split(",").toSeq else Seq.empty[String]
