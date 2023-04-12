@@ -41,6 +41,7 @@ object CassandraMigratorJob extends IJob {
     }  catch {
       case ex: Exception =>
         JobLogger.log(ex.getMessage, None, ERROR);
+        ex.printStackTrace();
         JobLogger.end(jobName + " execution failed", "FAILED", Option(Map("model" -> jobName, "statusMsg" -> ex.getMessage)));
         // generate metric event and push it to kafka topic in case of failure
         val metricEvent = getMetricJson(jobName, Option(new DateTime().toString(CommonUtil.dateFormat)), "FAILED", List())
