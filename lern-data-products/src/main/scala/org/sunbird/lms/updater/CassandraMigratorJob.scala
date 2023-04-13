@@ -72,8 +72,10 @@ object CassandraMigratorJob extends IJob {
           ConnectionHostParam.option(modelParams.getOrElse("cassandraMigrateHost", "localhost")) ++ CassandraConnectorConf.
           ConnectionPortParam.option(modelParams.getOrElse("cassandraMigratePort", "9042")))
 
-        spark.read.format(cassandraFormat).options(Map("table" -> cDataTableName,
-          "keyspace" -> keyspaceName, "cluster" -> "DataCluster")).load().limit(10)
+        var df = spark.read.format(cassandraFormat).options(Map("table" -> cDataTableName,
+          "keyspace" -> keyspaceName, "cluster" -> "DataCluster")).load()
+          JobLogger.log("Limiting the data to read 10 records")
+        df.show(10)
       }
       val repartitionColumns = if (modelParams.getOrElse("repartitionColumns", "").toString.nonEmpty)
         modelParams.getOrElse("repartitionColumns", "").split(",").toSeq else Seq.empty[String]
