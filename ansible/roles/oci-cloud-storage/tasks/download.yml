@@ -7,7 +7,9 @@
   command: oci os bucket get --name {{ oss_bucket_name }}
 
 - name: Ensure local destination directory exists
-  shell: mkdir -p {{ local_file_or_folder_path }}
+  shell: |
+    mv {{ local_file_or_folder_path }} {{ local_file_or_folder_path }}_bkp
+    mkdir -p {{ local_file_or_folder_path }}
 
 - name: download files from oci oss bucket
   command: oci os object bulk-download -bn {{ oss_bucket_name }} --prefix {{ oss_path }} --dest-dir {{ local_file_or_folder_path }}
