@@ -5,6 +5,9 @@
   include_role:
     name: "{{ cloud_service_provider }}-cloud-storage"
     tasks_from: upload.yml
+    apply:
+      environment:
+        OCI_CLI_AUTH: "instance_principal" # Used only for OCI
   tags:
     - upload
 
@@ -12,5 +15,8 @@
   include_role:
     name: "{{ cloud_service_provider }}-cloud-storage"
     tasks_from: download.yml
+    apply:
+      environment:
+        OCI_CLI_AUTH: "instance_principal" # Used only for OCI
   tags:
     - download
